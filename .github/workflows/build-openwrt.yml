@@ -17,17 +17,19 @@ on:
 #      - master
 #    paths:
 #      - '.config'
-  schedule:
-    - cron: 0 8 */3 * *
-#  watch:
-#    types: started
+#  schedule:
+#    - cron: 0 8 */3 * *
+  watch:
+    types: started
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_PASSWALL: https://github.com/Lienol/openwrt-package.git
+  REPO_ARGON: https://github.com/jerrykuku/luci-theme-argon.git
   REPO_BRANCH: master
   CONFIG_FILE: .config
   DIY_SH: diy.sh
-  SSH_ACTIONS: false
+  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
@@ -58,6 +60,12 @@ jobs:
 
     - name: Clone source code
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+      
+    - name: Clone passwall argon code
+      run: |
+        cd openwrt/package &&  git clone $REPO_PASSWALL
+        cd lean  && rm -rf luci-theme-argon
+        git clone -b 18.06 $REPO_ARGON
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
