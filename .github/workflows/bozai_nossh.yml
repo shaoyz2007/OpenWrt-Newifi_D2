@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Build OpenWrt
+name: Build OpenWrt-0615
 
 on:
   repository_dispatch:
@@ -25,9 +25,9 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: .config
+  CONFIG_FILE: .config.0615
   DIY_SH: diy.sh
-  SSH_ACTIONS: true
+#  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -72,9 +72,9 @@ jobs:
 #        cd openwrt
 #        ../$DIY_SH
 
-    - name: SSH connection to Actions
-      uses: P3TERX/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
+#    - name: SSH connection to Actions
+#      uses: P3TERX/debugger-action@master
+#      if: env.SSH_ACTIONS == 'true'
 
     - name: Download package
       id: package
@@ -113,5 +113,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt_firmware
+        name: OpenWrt_firmware-0615
         path: ${{ env.FIRMWARE }}
