@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Build OpenWrt-0615
+name: Build OpenWrt-0616
 
 on:
   repository_dispatch:
@@ -28,7 +28,7 @@ env:
   CONFIG_FILE: .config.0615
   DIY_SH: diy.sh
 #  SSH_ACTIONS: true
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
@@ -112,5 +112,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt_firmware-0615
+        name: OpenWrt_firmware-0616
         path: ${{ env.FIRMWARE }}
